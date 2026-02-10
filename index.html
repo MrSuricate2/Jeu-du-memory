@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Memory Game - Jeu de mémoire par Kevin Ferraretto</title>
+    <meta name="description" content="Jeu de memory gratuit avec des emojis. 3 niveaux de difficulté : facile, moyen, difficile. Testez votre mémoire et battez vos records !">
+    <meta name="keywords" content="memory, jeu de mémoire, memory game, emojis, jeu gratuit, Kevin Ferraretto, jeu en ligne">
+    <meta name="author" content="Kevin Ferraretto">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://memory.kevin-ferraretto.fr/">
+    <meta property="og:title" content="Memory Game - Jeu de mémoire">
+    <meta property="og:description" content="Jeu de memory gratuit avec des emojis. 3 niveaux de difficulté pour tester votre mémoire !">
+    <meta property="og:image" content="https://memory.kevin-ferraretto.fr/og-image.png">
+    <meta property="og:locale" content="fr_FR">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://memory.kevin-ferraretto.fr/">
+    <meta name="twitter:title" content="Memory Game - Jeu de mémoire">
+    <meta name="twitter:description" content="Jeu de memory gratuit avec des emojis. 3 niveaux de difficulté pour tester votre mémoire !">
+    <meta name="twitter:image" content="https://memory.kevin-ferraretto.fr/og-image.png">
+    
+    <link rel="icon" type="image/png" href="./assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Jeu du memory" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <meta name="theme-color" content="#667eea">
+
+    <link rel="canonical" href="https://memory.kevin-ferraretto.fr/">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+        <span class="toggle-icon">🌙</span>
+    </button>
+    <main>
+        <!-- Écran de démarrage -->
+        <div id="startScreen" class="screen active">
+            <h1 class="game-title">Jeu du Memory</h1>
+            <p class="subtitle">Trouve toutes les paires d'emojis !</p>
+            
+            <div class="difficulty-selector">
+                <h2>Choisis ton niveau</h2>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn" data-level="easy">
+                        <span class="level-name">Facile</span>
+                        <span class="level-info">8 cartes (4 paires)</span>
+                    </button>
+                    <button class="difficulty-btn" data-level="medium">
+                        <span class="level-name">Moyen</span>
+                        <span class="level-info">16 cartes (8 paires)</span>
+                    </button>
+                    <button class="difficulty-btn" data-level="hard">
+                        <span class="level-name">Difficile</span>
+                        <span class="level-info">24 cartes (12 paires)</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="best-scores">
+                <h3>Ton meilleurs scores</h3>
+                <div class="scores-list">
+                    <div class="score-item">
+                        <span class="score-label">Facile:</span>
+                        <span id="bestScoreEasy" class="score-value">--</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Moyen:</span>
+                        <span id="bestScoreMedium" class="score-value">--</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Difficile:</span>
+                        <span id="bestScoreHard" class="score-value">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Écran de jeu -->
+        <div id="gameScreen" class="screen">
+            <div class="game-header">
+                <div class="game-info">
+                    <div class="info-item">
+                        <span class="info-icon">⏱️</span>
+                        <span id="timer" class="info-value">0:00</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">🎯</span>
+                        <span id="moves" class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">✨</span>
+                        <span id="pairs" class="info-value">0/0</span>
+                    </div>
+                </div>
+                <button id="quitBtn" class="quit-btn">Quitter</button>
+            </div>
+
+            <div id="gameBoard" class="game-board"></div>
+        </div>
+
+        <!-- Écran de victoire -->
+        <div id="winScreen" class="screen">
+            <div class="win-content">
+                <h1 class="win-title">Bravo !</h1>
+                <p class="win-message">Tu as trouvé toutes les paires !</p>
+                
+                <div class="win-stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">⏱️</span>
+                        <span class="stat-label">Temps</span>
+                        <span id="finalTime" class="stat-value">0:00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🎯</span>
+                        <span class="stat-label">Coups</span>
+                        <span id="finalMoves" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">⭐</span>
+                        <span class="stat-label">Score</span>
+                        <span id="finalScore" class="stat-value">0</span>
+                    </div>
+                </div>
+
+                <div id="newRecord" class="new-record hidden">
+                    Nouveau record !
+                </div>
+
+                <div class="win-buttons">
+                    <button id="playAgainBtn" class="win-btn primary">Rejouer</button>
+                    <button id="menuBtn" class="win-btn secondary">Menu</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
