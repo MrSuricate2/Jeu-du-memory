@@ -1,0 +1,584 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --card-bg: white;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-hover: rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode {
+    --bg-color: #1a1a2e;
+    --text-color: #eee;
+    --card-bg: #16213e;
+    --shadow: rgba(0, 0, 0, 0.4);
+    --shadow-hover: rgba(0, 0, 0, 0.6);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-color);
+}
+
+/* Bouton Dark Mode */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: var(--card-bg);
+    box-shadow: 0 5px 15px var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.dark-mode-toggle:hover {
+    transform: translateY(-3px) rotate(15deg);
+    box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+.dark-mode-toggle:active {
+    transform: translateY(-1px) rotate(15deg);
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+}
+
+.screen {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* ===== ÉCRAN DE DÉMARRAGE ===== */
+#startScreen {
+    border-radius: 30px;
+    padding: 40px;
+    text-align: center;
+}
+
+.game-title {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px var(--shadow);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 40px;
+}
+
+.difficulty-selector h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 25px;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.difficulty-btn {
+    background: #667eea;
+    border: none;
+    border-radius: 20px;
+    padding: 16px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 150px;
+}
+
+.difficulty-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+}
+
+.difficulty-btn:active {
+    transform: translateY(-2px);
+}
+
+.level-emoji {
+    font-size: 3rem;
+}
+
+.level-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+}
+
+.level-info {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.best-scores {
+    background: #f5576c;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.best-scores h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.scores-list {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.score-item {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    min-width: 150px;
+}
+
+.score-label {
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.score-value {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* ===== ÉCRAN DE JEU ===== */
+#gameScreen {
+    background: var(--card-bg);
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 10px 30px var(--shadow);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.game-info {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    background: #667eea;
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-icon {
+    font-size: 1.5rem;
+}
+
+.info-value {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.quit-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+.quit-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Plateau de jeu */
+.game-board {
+    display: grid;
+    gap: 15px;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.game-board.easy {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.game-board.medium {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.game-board.hard {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.card {
+    aspect-ratio: 1;
+    background: #764ba2;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card.matched {
+    animation: matchAnimation 0.6s ease;
+    pointer-events: none;
+}
+
+@keyframes matchAnimation {
+    0%, 100% {
+        transform: scale(1) rotateY(180deg);
+    }
+    50% {
+        transform: scale(1.15) rotateY(180deg);
+    }
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.card-front {
+    background: #764ba2;
+    font-size: 2rem;
+    color: white;
+}
+
+.card-back {
+    background: var(--card-bg);
+    transform: rotateY(180deg);
+    font-size: 3rem;
+    box-shadow: inset 0 0 30px var(--shadow);
+    transition: background 0.3s ease;
+}
+
+/* ===== ÉCRAN DE VICTOIRE ===== */
+#winScreen {
+    background: var(--card-bg);
+    border-radius: 30px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 30px var(--shadow);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.win-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.win-title {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 15px;
+    animation: bounceIn 0.8s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.win-message {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 40px;
+}
+
+.win-stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: #f093fb;
+    border-radius: 20px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 140px;
+    box-shadow: 0 10px 25px rgba(240, 147, 251, 0.4);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.new-record {
+    background: #f5576c;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    animation: pulse 1s infinite;
+}
+
+.new-record.hidden {
+    display: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.win-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.win-btn {
+    border: none;
+    border-radius: 20px;
+    padding: 18px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.win-btn.primary {
+    background: #667eea;
+    color: white;
+}
+
+.win-btn.secondary {
+    background: #f5576c;
+    color: white;
+}
+
+.win-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.win-btn:active {
+    transform: translateY(-2px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .dark-mode-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        top: 15px;
+        right: 15px;
+    }
+
+    #startScreen,
+    #gameScreen,
+    #winScreen {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .game-title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .difficulty-buttons {
+        align-items: center;
+    }
+
+    .difficulty-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .game-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .game-info {
+        justify-content: center;
+    }
+
+    .game-board.easy,
+    .game-board.medium {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .game-board.hard {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .card-front {
+        font-size: 1.5rem;
+    }
+
+    .card-back {
+        font-size: 2rem;
+    }
+
+    .win-title {
+        font-size: 2rem;
+    }
+
+    .win-stats {
+        align-items: center;
+    }
+
+    .stat-item {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 1.5rem;
+    }
+
+    .info-item {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .info-icon {
+        font-size: 1.2rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+
+    .card-back {
+        font-size: 1.5rem;
+    }
+
+    .level-emoji {
+        font-size: 2rem;
+    }
+
+    .level-name {
+        font-size: 1.1rem;
+    }
+}
